@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.util;
 
-
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.model.UserMealWithExceed;
 
@@ -11,10 +10,7 @@ import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * GKislin
- * 31.05.2015.
- */
+
 public class UserMealsUtil {
     public static void main(String[] args) {
         List<UserMeal> mealList = Arrays.asList(
@@ -33,11 +29,7 @@ public class UserMealsUtil {
     public static List<UserMealWithExceed>  getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Map<LocalDate, Integer> caloriesDay = new HashMap<>();
         for (UserMeal userMeal : mealList) {
-            if (caloriesDay.containsKey(userMeal.getDate())) {
-                caloriesDay.merge(userMeal.getDate(), userMeal.getCalories(), (v1, v2) -> v1 + v2);
-            } else {
-                caloriesDay.put(userMeal.getDate(), userMeal.getCalories());
-            }
+                caloriesDay.merge(userMeal.getDate(), userMeal.getCalories(), Integer::sum);
         }
         List<UserMealWithExceed> result = new ArrayList<>();
         for (UserMeal userMeal : mealList) {
