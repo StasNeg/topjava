@@ -3,7 +3,14 @@ out
 target
 *.iml
 log
-
+*.patch
 
 
 /Prepare_to_HW0.patch
+/1_5_forward_to_redirect.patch
+/1_2_HW0_cycle.patch
+/1_3_switch_to_war.patch
+/1_1_HW0_stream.patch
+/1_0_fix.patch
+/1_6_logging.patch
+/1_4_add_servlet_api.patch
