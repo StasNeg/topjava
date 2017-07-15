@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web;
 
-import ru.javawebinar.topjava.Repository.MealsRepository;
+import ru.javawebinar.topjava.Repository.MealRepository;
+import ru.javawebinar.topjava.Repository.MealRepositoryImpl.MealRepositoryImplConcurrencyArrayList;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.MealsUtil;
 
@@ -18,11 +19,11 @@ import java.time.format.DateTimeFormatter;
 public class MealsServlet extends HttpServlet {
     private static String INSERT_OR_EDIT = "/edit.jsp";
     private static String LIST_MEALS = "/users.jsp";
-    private MealsRepository mealsRepository = new MealsRepository();
+    private MealRepository mealsRepository = new MealRepositoryImplConcurrencyArrayList();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=utf-8");
-
+         request.setCharacterEncoding("UTF-8");
         int id;
         try{
             id = Integer.parseInt(request.getParameter("id"));
@@ -33,7 +34,7 @@ public class MealsServlet extends HttpServlet {
         LocalDateTime dateTime = LocalDateTime.parse(request.getParameter("dateTime"), DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
         int calories = Integer.parseInt(request.getParameter("calories"));
         mealsRepository.add(new Meal(id, dateTime, description, calories));
-        request.setAttribute("meals", MealsUtil.getAllMealsWithExceeded(new MealsRepository().getMeals(), 2000));
+        request.setAttribute("meals", MealsUtil.getAllMealsWithExceeded(new MealRepositoryImplConcurrencyArrayList().getAll(), 2000));
         request.getRequestDispatcher(LIST_MEALS).forward(request, response);
     }
 
@@ -45,7 +46,7 @@ public class MealsServlet extends HttpServlet {
             int mealsId = Integer.parseInt(request.getParameter("mealsId"));
             mealsRepository.delete(mealsId);
             forward = LIST_MEALS;
-            request.setAttribute("meals", MealsUtil.getAllMealsWithExceeded(mealsRepository.getMeals(),2000));
+            request.setAttribute("meals", MealsUtil.getAllMealsWithExceeded(mealsRepository.getAll(),2000));
 
         }else if (action.equalsIgnoreCase("edit")){
             forward = INSERT_OR_EDIT;
@@ -53,7 +54,7 @@ public class MealsServlet extends HttpServlet {
             request.setAttribute("meals", mealsRepository.getById(mealsId));
         } else if (action.equalsIgnoreCase("listMeals")){
             forward = LIST_MEALS;
-            request.setAttribute("meals", MealsUtil.getAllMealsWithExceeded(mealsRepository.getMeals(),2000));
+            request.setAttribute("meals", MealsUtil.getAllMealsWithExceeded(mealsRepository.getAll(),2000));
         } else {
             forward = INSERT_OR_EDIT;
         }

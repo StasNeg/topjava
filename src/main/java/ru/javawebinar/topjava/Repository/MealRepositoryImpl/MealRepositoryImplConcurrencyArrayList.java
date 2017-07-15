@@ -1,4 +1,5 @@
-package ru.javawebinar.topjava.Repository;
+package ru.javawebinar.topjava.Repository.MealRepositoryImpl;
+import ru.javawebinar.topjava.Repository.MealRepository;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Stanislav on 14.07.2017.
  */
-public class MealsRepository {
+public class MealRepositoryImplConcurrencyArrayList implements MealRepository{
     private static AtomicInteger id = new AtomicInteger(0);
     private static CopyOnWriteArrayList<Meal> meals = new CopyOnWriteArrayList();
     static {
@@ -22,10 +23,10 @@ public class MealsRepository {
         meals.add(new Meal(id.getAndAdd(1),LocalDateTime.of(2015, Month.MAY, 31,20,0), "Ужин",510));
     }
 
-    public MealsRepository() {
+    public MealRepositoryImplConcurrencyArrayList() {
     }
 
-    public List<Meal> getMeals() {
+    public List<Meal> getAll() {
         return meals;
     }
 
