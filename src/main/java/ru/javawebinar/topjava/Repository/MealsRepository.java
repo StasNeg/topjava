@@ -1,5 +1,4 @@
 package ru.javawebinar.topjava.Repository;
-
 import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
@@ -31,11 +30,21 @@ public class MealsRepository {
     }
 
 
-    public static boolean delete(int mealsId) {
+    public boolean delete(int mealsId) {
         return meals.removeIf(meals -> meals.getId()==mealsId);
     }
 
-    public static Meal getMealsById(int mealsId) {
+    public Meal getById(int mealsId) {
         return meals.stream().filter(meal -> meal.getId()==mealsId).findFirst().get();
+    }
+
+    public void add(Meal meal) {
+        if(meal.getId() < 0){
+            meals.add(new Meal(id.getAndAdd(1),meal.getDateTime(), meal.getDescription(),meal.getCalories()));
+        }else{
+            delete(meal.getId());
+            meals.add(meal);
+        }
+
     }
 }

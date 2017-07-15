@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 public class MealWithExceed {
     private final int id;
