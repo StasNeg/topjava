@@ -17,16 +17,14 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealRepositoryConcurrencyHashMapImpl implements MealRepository {
     private AtomicInteger id = new AtomicInteger(0);
-    private Map<Integer, Meal> meals;
+    private Map<Integer, Meal> meals = new ConcurrentHashMap();
     private static final Logger log = getLogger(MealRepositoryConcurrencyHashMapImpl.class);
     public MealRepositoryConcurrencyHashMapImpl() {
         init();
     }
 
     private void init() {
-            log.debug("Init meals");
-            this.meals = new ConcurrentHashMap();
-            this.id = new AtomicInteger(0);
+        log.debug("Init meals");
             meals.put(id.incrementAndGet(), new Meal(id.intValue(), LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
             meals.put(id.incrementAndGet(), new Meal(id.intValue(), LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
             meals.put(id.incrementAndGet(), new Meal(id.intValue(), LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500));

@@ -24,6 +24,7 @@ public class MealsServlet extends HttpServlet {
     private MealRepository mealsRepository = new MealRepositoryConcurrencyHashMapImpl();
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
     private static final Logger log = getLogger(MealsServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("In MealServlets DoPost" );
         request.setCharacterEncoding("UTF-8");
@@ -42,12 +43,10 @@ public class MealsServlet extends HttpServlet {
         String description = request.getParameter("description");
         LocalDateTime dateTime = LocalDateTime.parse(request.getParameter("dateTime"), dateTimeFormatter);
         mealsRepository.add(new Meal(id, dateTime, description, calories));
-        request.setAttribute("meals", MealsUtil.getAllMealsWithExceeded(mealsRepository.getAll(), 2000));
-        request.getRequestDispatcher(LIST_MEALS).forward(request, response);
+        response.sendRedirect("meals");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String forward="";
         String action = request.getParameter("action");
         if (action == null) {

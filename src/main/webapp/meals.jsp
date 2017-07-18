@@ -21,7 +21,7 @@
 <h3>Meals</h3>
 <table width="500px" border = "1" cellpadding="1">
     <tr>
-        <th>Id</th>
+        <%--<th>Id</th>--%>
         <th>Descriptions</th>
         <th>Date and Time</th>
         <th>Calories</th>
@@ -38,7 +38,7 @@
                 <tr class="red">
             </c:otherwise>
         </c:choose>
-        <td >${meal.id}</td>
+        <%--<td >${meal.id}</td>--%>
         <td >${meal.description}</td>
         <javatime:format value="${meal.dateTime}" pattern="dd.MM.yyyy HH:mm:ss" var="parsedDate" />
         <td >${parsedDate}</td>

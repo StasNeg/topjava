@@ -10,8 +10,8 @@
 <body>
 <h3>Meals</h3>
 <form method="POST" action="meals" name="frmAddUser">
-    Meal ID : <input type="text" readonly="readonly" name="id" value="<c:out value="${meal.id}" />"/>
-    <br/>
+    <%--Meal ID : <input type="text" readonly="readonly" name="id" value="<c:out value="${meal.id}" />"/>--%>
+    <%--<br/>--%>
 
     Description : <input type="text" name="description" value="<c:out value="${meal.description}" />"/>
     <br/>
