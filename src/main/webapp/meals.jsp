@@ -18,6 +18,24 @@
 <body>
 <section>
     <h3><a href="index.html">Home</a></h3>
+    <form method="post" action="meals">
+        <dl>
+            Date Start:
+            <input type="date" name="startDate" value="${filter.startDate}">
+            Time Start:
+            <input type="time" name="startTime" value="${filter.startTime}">
+        </dl>
+        <dl>
+            Date End:
+            <input type="date" name="endDate" value="${filter.endDate}">
+            Time End:
+            <input type="time" name="endTime" value="${filter.endTime}">
+        </dl>
+        <button type="submit" name="button" value="submit">Accept</button>
+        <button type="submit" name="button" value="clear">Clear</button>
+    </form>
+
+
     <h2>Meal list</h2>
     <a href="meals?action=create">Add Meal</a>
     <hr/>

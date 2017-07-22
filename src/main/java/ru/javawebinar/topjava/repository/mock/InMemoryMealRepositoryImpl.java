@@ -6,8 +6,10 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -41,7 +43,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public boolean delete(int id) {
         log.info("delete", id);
-        return repository.get(id).getUserId() == AuthorizedUser.id() ? (repository.remove(id) != null) : null;
+        return repository.get(id).getUserId() == AuthorizedUser.id() && (repository.remove(id) != null);
     }
 
     @Override
@@ -52,7 +54,12 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll() {
-        return repository.values().stream().filter(meal -> meal.getUserId() == AuthorizedUser.id()).sorted(new Comparator<Meal>() {
+        return getAll(LocalDate.MIN,LocalDate.MAX);
+    }
+
+    @Override
+    public List<Meal> getAll(LocalDate start, LocalDate end) {
+        return repository.values().stream().filter(meal -> meal.getUserId() == AuthorizedUser.id() && DateTimeUtil.isBetween(meal.getDate(),start,end)).sorted(new Comparator<Meal>() {
             @Override
             public int compare(Meal o1, Meal o2) {
                 return o2.getDateTime().compareTo(o1.getDateTime());
