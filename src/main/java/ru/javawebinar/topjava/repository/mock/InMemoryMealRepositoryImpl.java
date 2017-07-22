@@ -43,13 +43,13 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public boolean delete(int id) {
         log.info("delete", id);
-        return repository.get(id).getUserId() == AuthorizedUser.id() && (repository.remove(id) != null);
+        return repository.get(id).getUserId() == AuthorizedUser.getId() && (repository.remove(id) != null);
     }
 
     @Override
     public Meal get(int id) {
         log.info("get", id);
-        return repository.get(id).getUserId() == AuthorizedUser.id() ? repository.get(id) : null;
+        return repository.get(id).getUserId() == AuthorizedUser.getId() ? repository.get(id) : null;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(LocalDate start, LocalDate end) {
-        return repository.values().stream().filter(meal -> meal.getUserId() == AuthorizedUser.id() && DateTimeUtil.isBetween(meal.getDate(),start,end)).sorted(new Comparator<Meal>() {
+        return repository.values().stream().filter(meal -> meal.getUserId() == AuthorizedUser.getId() && DateTimeUtil.isBetween(meal.getDate(),start,end)).sorted(new Comparator<Meal>() {
             @Override
             public int compare(Meal o1, Meal o2) {
                 return o2.getDateTime().compareTo(o1.getDateTime());
