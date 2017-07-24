@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.AuthorizedUser;
+import ru.javawebinar.topjava.to.Filter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,7 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("Authorized user");
         AuthorizedUser.setId(Integer.parseInt(request.getParameter("user")));
+        request.getSession().setAttribute("filtersClass", new Filter());
         response.sendRedirect("meals");
     }
 }

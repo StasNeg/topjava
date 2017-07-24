@@ -34,14 +34,6 @@
         <button type="submit" name="button" value="submit">Accept</button>
         <button type="submit" name="button" value="clear">Clear</button>
     </form>
-    <form action="users" method="post">
-        <select name = "user">
-            <option disabled>Выберите пользователя</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-        </select>
-        <p><input type="submit" value="Установить"></p>
-    </form>
 
     <h2>Meal list</h2>
     <a href="meals?action=create">Add Meal</a>

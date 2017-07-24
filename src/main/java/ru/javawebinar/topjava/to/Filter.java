@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava;
+package ru.javawebinar.topjava.to;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,6 +27,16 @@ public class Filter {
         startTime = null;
         endTime = null;
     }
+
+    public Filter getFilter() {
+        return new Filter(
+                getStartDate() == null ? LocalDate.MIN : getStartDate(),
+                getEndDate() == null ? LocalDate.MAX : getEndDate(),
+                getStartTime() == null ? LocalTime.MIN : getStartTime(),
+                getEndTime() == null ? LocalTime.MAX : getEndTime()
+        );
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }

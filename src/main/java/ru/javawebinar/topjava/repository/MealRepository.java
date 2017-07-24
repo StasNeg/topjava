@@ -7,13 +7,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface MealRepository {
-    Meal save(Meal Meal);
+    Meal save(Meal meal);
 
-    boolean delete(int id);
+    boolean delete(int id, int idUser);
 
-    Meal get(int id);
+    Meal get(int id, int idUser);
 
-    List<Meal> getAll();
+    List<Meal> getAll(int idUser);
 
-    List<Meal> getAll(LocalDate start, LocalDate end);
+    List<Meal> getAll(int idUser, LocalDate start, LocalDate end);
 }

@@ -41,30 +41,29 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id, int idUser) {
         log.info("delete", id);
-        return repository.get(id).getUserId() == AuthorizedUser.getId() && (repository.remove(id) != null);
+        Meal temp = repository.remove(id);
+        return temp != null && temp.getUserId() == idUser;
     }
 
     @Override
-    public Meal get(int id) {
+    public Meal get(int id, int idUser) {
         log.info("get", id);
-        return repository.get(id).getUserId() == AuthorizedUser.getId() ? repository.get(id) : null;
+        Meal temp = repository.get(id);
+        return temp.getUserId() == idUser ? temp : null;
     }
 
     @Override
-    public List<Meal> getAll() {
-        return getAll(LocalDate.MIN,LocalDate.MAX);
+    public List<Meal> getAll(int idUser) {
+        return getAll(idUser, LocalDate.MIN, LocalDate.MAX);
     }
 
     @Override
-    public List<Meal> getAll(LocalDate start, LocalDate end) {
-        return repository.values().stream().filter(meal -> meal.getUserId() == AuthorizedUser.getId() && DateTimeUtil.isBetween(meal.getDate(),start,end)).sorted(new Comparator<Meal>() {
-            @Override
-            public int compare(Meal o1, Meal o2) {
-                return o2.getDateTime().compareTo(o1.getDateTime());
-            }
-        }).collect(Collectors.toList());
+    public List<Meal> getAll(int idUser, LocalDate start, LocalDate end) {
+        return repository.values().stream().filter(meal -> meal.getUserId() == idUser && DateTimeUtil.isBetween(meal.getDate(), start, end)).
+                sorted(Comparator.comparing(Meal::getDateTime).reversed()).collect(Collectors.toList());
+
     }
 }
 

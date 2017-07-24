@@ -8,7 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 
-import ru.javawebinar.topjava.Filter;
+import ru.javawebinar.topjava.to.Filter;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 import java.util.Objects;
@@ -98,8 +96,8 @@ public class MealServlet extends HttpServlet {
             case "all":
             default:
                 log.info("getAll");
-                Filter filter = (Filter) httpSession.getAttribute("filtersClass") == null ? new Filter() : (Filter) httpSession.getAttribute("filtersClass");
-                request.setAttribute("meals", mealRestController.getAll(filter));
+                Filter filter = httpSession.getAttribute("filtersClass") == null ? new Filter() : (Filter) httpSession.getAttribute("filtersClass");
+                request.setAttribute("meals", mealRestController.getAll(filter.getFilter()));
                 request.setAttribute("filter", filter);
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
