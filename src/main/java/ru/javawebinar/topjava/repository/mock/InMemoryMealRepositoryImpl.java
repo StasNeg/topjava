@@ -46,7 +46,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         Meal temp = repository.remove(id);
         if (temp != null && temp.getUserId() == idUser)
             return true;
-        save(temp);
+        else if (temp != null) save(temp);
         return false;
     }
 
