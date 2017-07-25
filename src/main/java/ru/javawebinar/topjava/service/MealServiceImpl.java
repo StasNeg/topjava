@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -17,13 +18,8 @@ public class MealServiceImpl implements MealService {
     private MealRepository repository;
 
     @Override
-    public Meal save(Meal meal, int idUser) {
-        if (meal.isNew())
-            return repository.save(meal);
-        else if (meal.getUserId() == idUser) {
-            return repository.save(meal);
-        }
-        return null;
+    public Meal save(Meal meal, int idUser) throws NotFoundException {
+            return checkNotFound(repository.save(meal,idUser),"Not found entity with " + meal.getId());
     }
 
     @Override

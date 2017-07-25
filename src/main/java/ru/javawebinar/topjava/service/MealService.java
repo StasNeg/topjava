@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface MealService {
-    Meal save(Meal Meal, int idUser);
+    Meal save(Meal Meal, int idUser) throws NumberFormatException;
 
     void delete(int id, int idUser) throws NotFoundException;
 

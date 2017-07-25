@@ -10,7 +10,6 @@ import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -22,19 +21,22 @@ import java.util.stream.Collectors;
 public class InMemoryMealRepositoryImpl implements MealRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryMealRepositoryImpl.class);
 
-
     private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.MEALS.forEach(this::save);
+        MealsUtil.MEALS.forEach(meal -> save(meal, AuthorizedUser.getId()));
     }
 
     @Override
-    public Meal save(Meal meal) {
+    public Meal save(Meal meal, int idUser) {
         log.info("save {}", meal);
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
+        } else {
+            Meal temp = repository.get(meal.getId());
+            if (temp == null || temp.getUserId() != idUser)
+                return null;
         }
         repository.put(meal.getId(), meal);
         return meal;
