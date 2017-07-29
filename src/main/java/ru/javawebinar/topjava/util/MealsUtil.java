@@ -10,7 +10,11 @@ import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
+
 public class MealsUtil {
+    public static final int USER_ID = START_SEQ;
+    public static final int ADMIN_ID = START_SEQ + 1;
     public static final List<Meal> MEALS = Arrays.asList(
             new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
             new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000),
