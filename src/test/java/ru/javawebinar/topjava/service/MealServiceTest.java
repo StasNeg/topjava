@@ -35,9 +35,7 @@ public class MealServiceTest {
 
     @Rule
     public TestWatcher watcher = new RuleWatcher(MealServiceTest.class) ;
-//    static {
-//        SLF4JBridgeHandler.install();
-//    }
+
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -50,7 +48,7 @@ public class MealServiceTest {
         MATCHER.assertCollectionEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), service.getAll(USER_ID));
     }
 
-//    @Test(expected = NotFoundException.class)
+
     @Test
     public void testDeleteNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
@@ -86,7 +84,6 @@ public class MealServiceTest {
     @Test
     public void testUpdateNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        System.out.println("123");
         Meal meal = new Meal(LocalDateTime.now(),"Breakfast",1000);
         meal.setUser(USER);
         service.update(service.get(MEAL1_ID,USER_ID), ADMIN_ID);
