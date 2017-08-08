@@ -31,7 +31,8 @@ public class JpaMealRepositoryImpl implements MealRepository {
             return meal;
         } else {
             Meal mealFind = em.find(Meal.class, meal.getId());
-            return mealFind.getUser().getId() == userId ? em.merge(meal) : null;
+
+            return mealFind != null && mealFind.getUser().getId() == userId ? em.merge(meal) : null;
 //            System.out.println(mealFind.getUser().getId());
 //
 //            int result = em.createNamedQuery(Meal.UPDATE)
@@ -55,7 +56,7 @@ public class JpaMealRepositoryImpl implements MealRepository {
     @Override
     public Meal get(int id, int userId) {
         Meal mealFind = em.find(Meal.class, id);
-        return mealFind.getUser().getId() == userId ? mealFind : null;
+        return mealFind != null && mealFind.getUser().getId() == userId ? mealFind : null;
 
 //        List<Meal> meals = em.createNamedQuery(Meal.BY_ID, Meal.class)
 //                .setParameter(1, id).setParameter(2, userId)
