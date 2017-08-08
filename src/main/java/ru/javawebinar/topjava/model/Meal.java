@@ -46,6 +46,7 @@ public class Meal extends BaseEntity {
     @CollectionTable(name = "users")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
     public Meal() {

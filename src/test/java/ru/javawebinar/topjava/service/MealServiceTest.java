@@ -1,11 +1,14 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.AfterClass;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import org.junit.rules.TestWatcher;
+
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -19,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
+
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
@@ -34,13 +38,18 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 public class MealServiceTest {
 
     @Rule
-    public TestWatcher watcher = new RuleWatcher(MealServiceTest.class) ;
+    public RuleWatcher watcher = new RuleWatcher(MealServiceTest.class) ;
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
     @Autowired
     private MealService service;
+
+    @AfterClass
+    public static void outWatcher() {
+        System.out.println(new RuleWatcher(MealService.class).getResultString());
+    }
 
     @Test
     public void testDelete() throws Exception {
