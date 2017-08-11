@@ -26,8 +26,14 @@ import java.util.concurrent.TimeUnit;
 
 import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.MealTestData.MEAL1;
+import static ru.javawebinar.topjava.MealTestData.MEAL2;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
+
+/**
+ * Created by Stanislav on 11.08.2017.
+ */
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -36,7 +42,11 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-public class MealServiceTest {
+public abstract class AbstractMealServiceTest {
+
+    @Autowired
+    protected MealService service;
+
     private static final Logger resultLog = getLogger("result");
 
     private static StringBuilder results = new StringBuilder();
@@ -68,9 +78,6 @@ public class MealServiceTest {
                 results +
                 "---------------------------------\n");
     }
-
-    @Autowired
-    private MealService service;
 
     @Test
     public void testDelete() throws Exception {
@@ -129,4 +136,5 @@ public class MealServiceTest {
                         LocalDate.of(2015, Month.MAY, 30),
                         LocalDate.of(2015, Month.MAY, 30), USER_ID));
     }
+
 }

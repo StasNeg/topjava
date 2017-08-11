@@ -1,8 +1,10 @@
 package ru.javawebinar.topjava.service;
 
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -22,6 +24,7 @@ import java.util.Collections;
 
 import static ru.javawebinar.topjava.UserTestData.*;
 
+
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
@@ -29,7 +32,9 @@ import static ru.javawebinar.topjava.UserTestData.*;
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-public class UserServiceTest {
+public abstract class AbstractUserServiceTest {
+    @Autowired
+    protected UserService service;
 
     static {
         // Only for postgres driver logging
@@ -37,14 +42,11 @@ public class UserServiceTest {
         SLF4JBridgeHandler.install();
     }
 
-    @Autowired
-    private UserService service;
-
     @Before
     public void setUp() throws Exception {
         service.evictCache();
     }
-        
+
     @Test
     public void testCreate() throws Exception {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.singleton(Role.ROLE_USER));
@@ -100,4 +102,5 @@ public class UserServiceTest {
         service.update(updated);
         MATCHER.assertEquals(updated, service.get(USER_ID));
     }
+
 }
