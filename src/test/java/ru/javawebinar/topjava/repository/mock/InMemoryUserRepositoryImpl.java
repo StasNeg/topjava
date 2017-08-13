@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.mock;
 
 import org.springframework.stereotype.Repository;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
@@ -49,5 +50,10 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
                 .filter(u -> email.equals(u.getEmail()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public User getMealsList(Integer userId) {
+        return null;
     }
 }

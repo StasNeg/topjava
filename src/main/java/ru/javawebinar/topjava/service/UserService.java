@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.service;
 
 
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -21,4 +22,6 @@ public interface UserService {
     void evictCache();
 
     List<User> getAll();
+    List<Meal> getAll(Integer userId);
+    User getMealsList(Integer userId);
 }

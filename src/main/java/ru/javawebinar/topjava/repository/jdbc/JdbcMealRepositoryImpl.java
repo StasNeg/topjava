@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 
@@ -89,5 +90,10 @@ public class JdbcMealRepositoryImpl implements MealRepository {
         return jdbcTemplate.query(
                 "SELECT * FROM meals WHERE user_id=?  AND date_time BETWEEN  ? AND ? ORDER BY date_time DESC",
                 ROW_MAPPER, userId, DateTimeUtil.convertLocalDateTime(startDate), DateTimeUtil.convertLocalDateTime(endDate));
+    }
+
+    @Override
+    public Meal getUserByMealId(Integer id) {
+        throw new UnsupportedOperationException();
     }
 }

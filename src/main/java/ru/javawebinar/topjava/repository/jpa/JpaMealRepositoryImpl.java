@@ -34,6 +34,11 @@ public class JpaMealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    public Meal getUserByMealId(Integer id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     @Transactional
     public boolean delete(int id, int userId) {
         return em.createNamedQuery(Meal.DELETE)
