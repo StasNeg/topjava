@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -17,13 +19,14 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.ActiveDbProfileResolver;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
+        "classpath:spring/spring-db.xml",
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
@@ -51,6 +54,9 @@ abstract public class AbstractServiceTest {
         // needed only for java.util.logging (postgres driver)
         SLF4JBridgeHandler.install();
     }
+
+    @Autowired
+    protected Environment environment;
 
     @AfterClass
     public static void printResult() {
@@ -81,5 +87,9 @@ abstract public class AbstractServiceTest {
             result = cause;
         }
         return result;
+    }
+
+    protected boolean isProfileJDBS() {
+        return Arrays.asList(environment.getActiveProfiles()).contains("jdbc");
     }
 }
