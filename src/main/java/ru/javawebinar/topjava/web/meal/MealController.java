@@ -71,10 +71,7 @@ public class MealController {
     public String save(@ModelAttribute("id") String id,
                        @ModelAttribute("dateTime") String dateTime,
                        @ModelAttribute("description") String descripton,
-                       @ModelAttribute("calories") Integer calories,
-                       HttpServletRequest request,
-                       HttpServletResponse response) throws ServletException, IOException {
-        log.info("create meal for Id={}", id);
+                       @ModelAttribute("calories") Integer calories) throws ServletException, IOException {
         Meal meal = new Meal(LocalDateTime.parse(dateTime), descripton, calories);
         if (id.equals("")) {
             log.info("create meal for userId={}", AuthorizedUser.id());
@@ -84,9 +81,6 @@ public class MealController {
             assureIdConsistent(meal, Integer.parseInt(id));
             service.update(meal, AuthorizedUser.id());
         }
-//        response.sendRedirect("/meals");
-//        response.setHeader("Location", "/meal");
-
         return "redirect:/meals";
     }
 
@@ -95,22 +89,17 @@ public class MealController {
                          @ModelAttribute("endDate") String endDate,
                          @ModelAttribute("startTime") String startTime,
                          @ModelAttribute("endTime") String endTime,
-                         Model model,
-                         HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                         Model model) throws ServletException, IOException {
         model.addAttribute("meals", getBetween(parseLocalDate(startDate),
                 parseLocalTime(startTime),
                 parseLocalDate(endDate),
                 parseLocalTime(endTime)));
-
-//        response.setHeader("referer",request.getHeader("referer"));
-//        request.getRequestDispatcher("/WEB-INF/jsp/meals").forward(request, response);
         return "meals";
     }
 
     private List<MealWithExceed> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
         int userId = AuthorizedUser.id();
         log.info("getBetween dates({} - {}) time({} - {}) for userId={}", startDate, endDate, startTime, endTime, userId);
-
         return MealsUtil.getFilteredWithExceeded(
                 service.getBetweenDates(
                         startDate != null ? startDate : DateTimeUtil.MIN_DATE,
