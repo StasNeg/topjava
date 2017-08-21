@@ -92,6 +92,10 @@ public class User extends AbstractNamedEntity {
         return email;
     }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
