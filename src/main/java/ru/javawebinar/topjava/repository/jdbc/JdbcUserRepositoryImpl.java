@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -11,11 +12,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.RoleUser;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,21 +33,37 @@ public class JdbcUserRepositoryImpl implements UserRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final SimpleJdbcInsert insertUser;
-    private final SimpleJdbcInsert insertRole;
+
 
     @Autowired
     public JdbcUserRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertUser = new SimpleJdbcInsert(dataSource)
                 .withTableName("users")
                 .usingGeneratedKeyColumns("id");
-        this.insertRole = new SimpleJdbcInsert(dataSource)
-                .withTableName("user_roles")
-                .usingGeneratedKeyColumns("user_id");
-
-
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
+
+
+    private void insertRoles(final List<RoleUser> roles){
+
+        jdbcTemplate.batchUpdate("INSERT INTO user_roles " +
+                "(user_id, role) VALUES (?, ?)", new BatchPreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                RoleUser roleUser = roles.get(i);
+                ps.setInt(1, roleUser.getUser_id());
+                ps.setString(2, roleUser.getRole());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return roles.size();
+            }
+        });
+    }
+
 
     @Override
     @Transactional
@@ -55,6 +73,7 @@ public class JdbcUserRepositoryImpl implements UserRepository {
         if (user.isNew()) {
             Number newKey = insertUser.executeAndReturnKey(parameterSource);
             user.setId(newKey.intValue());
+            insertRoles(user.getRoles().stream().map(roles->new RoleUser(user.getId(),roles.toString())).collect(Collectors.toList()));
         } else {
             namedParameterJdbcTemplate.update(
                     "UPDATE users SET name=:name, email=:email, password=:password, " +

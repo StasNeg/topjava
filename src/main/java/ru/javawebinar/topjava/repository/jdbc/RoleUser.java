@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.model;
+package ru.javawebinar.topjava.repository.jdbc;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -30,5 +30,10 @@ public class RoleUser {
 
     public RoleUser() {
 
+    }
+
+    public RoleUser(Integer user_id, String role) {
+        this.user_id = user_id;
+        this.role = role;
     }
 }
