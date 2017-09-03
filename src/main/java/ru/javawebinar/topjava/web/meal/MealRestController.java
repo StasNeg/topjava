@@ -1,15 +1,12 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.DateTimeMapper;
 import ru.javawebinar.topjava.to.MealWithExceed;
-import ru.javawebinar.topjava.web.user.AdminRestController;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -48,7 +45,10 @@ public class MealRestController extends AbstractMealController {
 
     @PostMapping(value = "/createUpdate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Meal> updateOrCreate(@RequestBody Meal meal) {
-        if (meal.getId().equals(null)) {
+
+        System.out.println(meal);
+
+        if (meal.getId() == null) {
             meal = super.create(meal);
         } else
             super.update(meal, meal.getId());
@@ -59,13 +59,13 @@ public class MealRestController extends AbstractMealController {
         return ResponseEntity.created(uriOfNewResource).body(meal);
     }
 
-
     @PostMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MealWithExceed> getBetween(@RequestBody DateTimeMapper dateTimeMapper) {
-        System.out.println("\n\n/n/n\n\n");
-        return super.getBetween(dateTimeMapper.getDateStart().toLocalDate(),
-                dateTimeMapper.getDateStart().toLocalTime(),
-                dateTimeMapper.getDateEnd().toLocalDate(),
-                dateTimeMapper.getDateEnd().toLocalTime());
+        LocalDate dateStart = dateTimeMapper.getDateStart() == null ? null : dateTimeMapper.getDateStart().toLocalDate();
+        LocalDate dateEnd = dateTimeMapper.getDateEnd() == null ? null : dateTimeMapper.getDateEnd().toLocalDate();
+        LocalTime timeStart = dateTimeMapper.getDateStart() == null ? null : dateTimeMapper.getDateStart().toLocalTime();
+        LocalTime timeEnd = dateTimeMapper.getDateEnd() == null ? null : dateTimeMapper.getDateEnd().toLocalTime();
+
+        return super.getBetween(dateStart, timeStart, dateEnd, timeEnd);
     }
 }
