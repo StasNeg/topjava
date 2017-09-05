@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web.meal;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,21 +44,35 @@ public class MealRestController extends AbstractMealController {
         return super.get(id);
     }
 
-    @PostMapping(value = "/createUpdate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Meal> updateOrCreate(@RequestBody Meal meal) {
 
-        System.out.println(meal);
-
-        if (meal.getId() == null) {
-            meal = super.create(meal);
-        } else
-            super.update(meal, meal.getId());
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Meal> createPost(@RequestBody Meal meal) {
+        meal = super.create(meal);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("rest/meals/createUpdate/{id}")
+                .path("rest/meals/create/{id}")
                 .buildAndExpand(meal.getId()).toUri();
-
         return ResponseEntity.created(uriOfNewResource).body(meal);
     }
+
+    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Meal> updatePost(@RequestBody Meal meal) {
+        super.update(meal, meal.getId());
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("rest/meals/update/{id}")
+                .buildAndExpand(meal.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(meal);
+    }
+
+    @PostMapping(value = "/filterWithAttributes", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MealWithExceed> getBetween(@RequestParam("dateStart") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeStart,
+                                           @RequestParam("dateEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTimeEnd) {
+        LocalDate dateStart = dateTimeStart.toLocalDate() == null ? null : dateTimeStart.toLocalDate();
+        LocalDate dateEnd = dateTimeEnd.toLocalDate() == null ? null : dateTimeEnd.toLocalDate();
+        LocalTime timeStart = dateTimeStart.toLocalTime() == null ? null : dateTimeStart.toLocalTime();
+        LocalTime timeEnd = dateTimeEnd.toLocalTime() == null ? null : dateTimeEnd.toLocalTime();
+        return super.getBetween(dateStart, timeStart, dateEnd, timeEnd);
+    }
+
 
     @PostMapping(value = "/filter", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MealWithExceed> getBetween(@RequestBody DateTimeMapper dateTimeMapper) {

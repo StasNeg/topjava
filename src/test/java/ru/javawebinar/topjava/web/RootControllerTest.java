@@ -1,14 +1,11 @@
 package ru.javawebinar.topjava.web;
 
 import org.junit.Test;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.head;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static ru.javawebinar.topjava.MealWithExceededTestData.*;
@@ -43,11 +40,11 @@ public class RootControllerTest extends AbstractControllerTest {
                 .andExpect(model().attribute("meals", hasSize(6)))
                 .andExpect(model().attribute("meals", hasItem(
                         allOf(
-                                hasProperty("id", is(MEALEXSEED6.getId())),
-                                hasProperty("dateTime", is(MEALEXSEED6.getDateTime())),
-                                hasProperty("description", is(MEALEXSEED6.getDescription())),
-                                hasProperty("calories", is(MEALEXSEED6.getCalories())),
-                                hasProperty("exceed", is(MEALEXSEED6.isExceed()))
+                                hasProperty("id", is(MEAL_EXSEED6.getId())),
+                                hasProperty("dateTime", is(MEAL_EXSEED6.getDateTime())),
+                                hasProperty("description", is(MEAL_EXSEED6.getDescription())),
+                                hasProperty("calories", is(MEAL_EXSEED6.getCalories())),
+                                hasProperty("exceed", is(MEAL_EXSEED6.isExceed()))
                         ))));
     }
 
