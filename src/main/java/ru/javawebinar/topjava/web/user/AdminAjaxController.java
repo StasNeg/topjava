@@ -34,4 +34,9 @@ public class AdminAjaxController extends AbstractUserController {
             super.create(user);
         }
     }
+
+    @PostMapping(value = "/enabled", consumes = MediaType.ALL_VALUE)
+    public void changeEnabled(@RequestParam(name = "idUser") Integer id, @RequestParam(name="enabled") Boolean enabled){
+        super.changeEnabled(id,enabled);
+    }
 }

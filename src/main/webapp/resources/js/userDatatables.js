@@ -1,5 +1,9 @@
 var ajaxUrl = "ajax/admin/users/";
 var datatableApi;
+var dataFilterApi = function () {
+    isSet:false;
+};
+
 
 // $(document).ready(function () {
 $(function () {
@@ -40,3 +44,17 @@ $(function () {
     });
     makeEditable();
 });
+
+
+function changeIsEnabled(id, isEnabled) {
+    $.ajax({
+        type: "POST",
+        url: ajaxUrl + "enabled",
+        data: {idUser: id, enabled : isEnabled},
+        success: function () {
+            updateTable();
+            successNoty("Change");
+        }
+    });
+}
+

@@ -13,24 +13,48 @@
         <div class="container">
             <div class="shadow">
                 <h3><spring:message code="meal.title"/></h3>
-                <form method="post" action="meals/filter">
-                    <dl>
-                        <dt><spring:message code="meal.startDate"/>:</dt>
-                        <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
-                    </dl>
-                    <dl>
-                        <dt><spring:message code="meal.endDate"/>:</dt>
-                        <dd><input type="date" name="endDate" value="${param.endDate}"></dd>
-                    </dl>
-                    <dl>
-                        <dt><spring:message code="meal.startTime"/>:</dt>
-                        <dd><input type="time" name="startTime" value="${param.startTime}"></dd>
-                    </dl>
-                    <dl>
-                        <dt><spring:message code="meal.endTime"/>:</dt>
-                        <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
-                    </dl>
-                    <button type="submit"><spring:message code="meal.filter"/></button>
+                <form class="form-horizontal" id="filterForm">
+                    <div class="form-group">
+                        <label for="startDate" class="control-label col-xs-3"><spring:message code="meal.startDate"/></label>
+                        <div class="col-xs-9">
+                            <input type="date" class="form-control" id="startDate" name="startDate" placeholder="<spring:message code="meal.startDate"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate" class="control-label col-xs-3"><spring:message code="meal.endDate"/></label>
+                        <div class="col-xs-9">
+                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="<spring:message code="meal.calories"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startTime" class="control-label col-xs-3"><spring:message code="meal.startTime"/></label>
+                        <div class="col-xs-9">
+                            <input type="time" class="form-control" id="startTime" name="startTime" placeholder="<spring:message code="meal.startTime"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endTime" class="control-label col-xs-3"><spring:message code="meal.endTime"/></label>
+                        <div class="col-xs-9">
+                            <input type="time" class="form-control" id="endTime" name="endTime" placeholder="<spring:message code="meal.endTime"/>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-primary" onclick="filter()">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <spring:message code="meal.filter"/>
+                        </a>
+                        <a class="btn btn-primary" onclick="filterCancel()">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <spring:message code="meals.filterCancel"/>
+                        </a>
+                        <%--<div class="col-xs-offset-3 col-xs-9">--%>
+                            <%--<button type="submit" class="btn btn-primary">--%>
+                                <%--<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>--%>
+                            <%--</button>--%>
+                        <%--</div>--%>
+                    </div>
                 </form>
                 <hr>
                 <div class="view-box">
@@ -38,7 +62,6 @@
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         <spring:message code="common.add"/>
                     </a>
-        <%--<a href="meals/create"><spring:message code="meal.add"/></a>--%>
                 <hr>
                     <table class="table table-striped display" id="datatable">
                         <thead>
@@ -53,12 +76,12 @@
                         </thead>
                         <c:forEach items="${meals}" var="meal">
                             <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
-                            <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+                            <tr class="${meal.exceed ? 'exceeded' : 'normal'}" id="${meal.id}">
                                 <td>${fn:formatDateTime(meal.dateTime)}</td>
                                 <td>${meal.description}</td>
                                 <td>${meal.calories}</td>
                                 <td><a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                                <td><a class="delete" id="${meal.id}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                                <td><a class="delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                             </tr>
                         </c:forEach>
                     </table>
@@ -78,7 +101,6 @@
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
                     <input type="hidden" id="id" name="id">
-
                     <div class="form-group">
                         <label for="description" class="control-label col-xs-3"><spring:message code="meal.description"/></label>
                         <div class="col-xs-9">
@@ -96,7 +118,6 @@
 
                     <div class="form-group">
                         <label for="dateTime" class="control-label col-xs-3"><spring:message code="meal.dateTime"/></label>
-
                         <div class="col-xs-9">
                             <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" placeholder="<spring:message code="meal.dateTime"/>">
                         </div>

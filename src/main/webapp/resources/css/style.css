@@ -23,6 +23,15 @@ dd {
     color: red;
 }
 
+.active {
+    color: rebeccapurple;
+}
+
+.nonactive {
+    color: lightgray;
+}
+
+
 header, footer {
     background: none repeat scroll 0 0 #A6C9E2;
     color: #2E6E9E;
