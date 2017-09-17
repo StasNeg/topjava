@@ -19,33 +19,42 @@
                     <div class="panel-body">
                         <form class="form-horizontal" id="filter">
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="startDate"><spring:message
+                                <label class="control-label col-sm-4" for="startDate"><spring:message
                                         code="meal.startDate"/>:</label>
-
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="date" name="startDate" id="startDate">
+                                <div class='col-sm-4 input-group date' id='datePickerStart'>
+                                    <input class="form-control" type="text" name="startDate" id="startDate">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
 
-                                <label class="control-label col-sm-3" for="startTime"><spring:message
+                                <label class="control-label col-sm-4" for="startTime"><spring:message
                                         code="meal.startTime"/>:</label>
-
-                                <div class="col-sm-3">
-                                    <input class="form-control" type="time" name="startTime" id="startTime">
+                                <div class="col-sm-4 input-group date" id = "timePickerStart">
+                                    <input class="form-control" name="startTime" id="startTime">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2" for="endDate"><spring:message
-                                        code="meal.endDate"/>:</label>
 
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="date" name="endDate" id="endDate">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4" for="endDate"><spring:message
+                                        code="meal.endDate"/>:</label>
+                                <div class='col-sm-4 input-group date' id='datePickerEnd'>
+                                    <input class="form-control" type="text" name="endDate" id="endDate">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
 
-                                <label class="control-label col-sm-3" for="endTime"><spring:message
+                                <label class="control-label col-sm-4" for="endTime"><spring:message
                                         code="meal.endTime"/>:</label>
-
-                                <div class="col-sm-3">
-                                    <input class="form-control" type="time" name="endTime" id="endTime">
+                                <div class="col-sm-4 input-group date" id = "timePickerEnd">
+                                    <input class="form-control" name="endTime" id="endTime">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
                                 </div>
                             </div>
                         </form>
@@ -75,25 +84,6 @@
                 <th></th>
             </tr>
             </thead>
-            <%--<c:forEach items="${meals}" var="meal">--%>
-                <%--<jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>--%>
-                <%--<tr class="${meal.exceed ? 'exceeded' : 'normal'}">--%>
-                    <%--&lt;%&ndash;<td>&ndash;%&gt;--%>
-                            <%--&lt;%&ndash;${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}&ndash;%&gt;--%>
-                            <%--&lt;%&ndash;<%=TimeUtil.toString(meal.getDateTime())%>&ndash;%&gt;--%>
-                            <%--&lt;%&ndash;${fn:replace(meal.dateTime, 'T', ' ')}&ndash;%&gt;--%>
-                            <%--${fn:formatDateTime(meal.dateTime)}--%>
-                    <%--</td>--%>
-                    <%--<td>${meal.description}</td>--%>
-                    <%--<td>${meal.calories}</td>--%>
-                    <%--<td><a>--%>
-                        <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>--%>
-                    <%--</a></td>--%>
-                    <%--<td><a onclick="deleteRow(${meal.id})">--%>
-                        <%--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>--%>
-                    <%--</a></td>--%>
-                <%--</tr>--%>
-            <%--</c:forEach>--%>
         </table>
     </div>
 </div>
@@ -113,9 +103,12 @@
                         <label for="dateTime" class="control-label col-xs-3"><spring:message
                                 code="meal.dateTime"/></label>
 
-                        <div class="col-xs-9">
-                            <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
+                        <div class="col-xs-9 input-group date" id = "datetimePicker">
+                            <input class="form-control" id="dateTime" name="dateTime"
                                    placeholder="<spring:message code="meal.dateTime"/>">
+                            <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -157,6 +150,7 @@
     <c:forEach var="key" items='<%=new String[]{"common.deleted","common.saved","common.errorStatus"}%>'>
     i18n["${key}"] = "<spring:message code="${key}"/>";
     </c:forEach>
+
 </script>
 
 </html>

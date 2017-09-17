@@ -1,6 +1,7 @@
 var ajaxUrl = "ajax/profile/meals/";
 var datatableApi;
 
+
 function updateTable() {
     $.ajax({
         type: "POST",
@@ -67,4 +68,25 @@ $(function () {
         "initComplete": makeEditable
     });
     // makeEditable();
+    $('#datePickerStart').datetimepicker({
+        format: 'L',
+        format: 'YYYY-MM-DD'
+    });
+    $('#datePickerEnd').datetimepicker({
+        format: 'L',
+        format: 'YYYY-MM-DD'
+    });
+    $('#timePickerStart').datetimepicker({
+        format: 'LT',
+        format: 'HH:mm'
+    });
+    $('#timePickerEnd').datetimepicker({
+        format: 'LT',
+        format: 'HH:mm'
+    });
+    $('#datetimePicker').datetimepicker({
+        format: 'DD.MM.YYYY HH:mm'
+    });
+
 });
+
