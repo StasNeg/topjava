@@ -43,19 +43,6 @@ public class MealAjaxController extends AbstractMealController {
         super.delete(id);
     }
 
-//    @PostMapping
-//    public void createOrUpdate(@RequestParam("id") Integer id,
-//                               @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
-//                               @RequestParam("description") String description,
-//                               @RequestParam("calories") int calories) {
-//        Meal meal = new Meal(id, dateTime, description, calories);
-//        if (meal.isNew()) {
-//            super.create(meal);
-//        }else{
-//            super.update(meal,meal.getId());
-//        }
-//    }
-
     @PostMapping
     public ResponseEntity<String> createOrUpdate(@Valid MealTo meal, BindingResult result) {
         if (result.hasErrors()) {

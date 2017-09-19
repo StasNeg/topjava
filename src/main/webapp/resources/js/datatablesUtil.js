@@ -20,6 +20,10 @@ function updateRow(id) {
     $("#modalTitle").html(i18n["editTitle"]);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
+            if (key=='dateTime'){
+                $('#dateTimePicker').data('DateTimePicker').date(new Date(value));
+                value = value.substring(0, 10) + " " +value.substring(11, 16);
+            }
             form.find("input[name='" + key + "']").val(value);
         });
         $('#editRow').modal();
@@ -49,6 +53,7 @@ function save() {
         success: function () {
             $("#editRow").modal("hide");
             updateTable();
+            $('#dateTimePicker').data('DateTimePicker').clear();
             successNoty("common.saved");
         }
     });

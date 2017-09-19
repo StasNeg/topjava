@@ -18,11 +18,10 @@
 
     <!--http://stackoverflow.com/a/24070373/548473-->
     <script type="text/javascript" src="webjars/jquery/3.2.1/dist/jquery.min.js" defer></script>
-    <script type="text/javascript" src="webjars/moment/2.18.1/min/moment.min.js" defer></script>
+    <script type="text/javascript" src="webjars/momentjs/2.18.1/moment.js" defer></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js" defer></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/transition.js" defer></script>
     <script type="text/javascript" src="resources/js/bootstrap-datetimepicker.min.js" defer></script>
-    <%--<script type="text/javascript" src="webjars/bootstrap-datetimepicker/2.4.2/js/bootstrap-datetimepicker.min.js" defer></script>--%>
     <script type="text/javascript" src="webjars/datatables/1.10.15/media/js/jquery.dataTables.min.js" defer></script>
     <script type="text/javascript" src="webjars/datatables/1.10.15/media/js/dataTables.bootstrap.min.js" defer></script>
     <script type="text/javascript" src="webjars/noty/3.1.0/lib/noty.min.js" defer></script>

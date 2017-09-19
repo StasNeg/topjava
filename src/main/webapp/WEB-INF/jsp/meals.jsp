@@ -12,7 +12,6 @@
 <div class="jumbotron">
     <div class="container">
         <h3><spring:message code="meal.title"/></h3>
-
         <div class="row">
             <div class="col-sm-7">
                 <div class="panel panel-default">
@@ -103,10 +102,10 @@
                         <label for="dateTime" class="control-label col-xs-3"><spring:message
                                 code="meal.dateTime"/></label>
 
-                        <div class="col-xs-9 input-group date" id = "datetimePicker">
+                        <div class="col-xs-9 input-group date" id = "dateTimePicker">
                             <input class="form-control" id="dateTime" name="dateTime"
                                    placeholder="<spring:message code="meal.dateTime"/>">
-                            <span class="input-group-addon">
+                            <span  class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                         </div>
@@ -130,7 +129,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button class="btn btn-primary" type="button" onclick="save()">
+                            <button class="btn btn-primary" type="button" onclick="saveMeal()">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </div>
@@ -150,7 +149,6 @@
     <c:forEach var="key" items='<%=new String[]{"common.deleted","common.saved","common.errorStatus"}%>'>
     i18n["${key}"] = "<spring:message code="${key}"/>";
     </c:forEach>
-
 </script>
 
 </html>

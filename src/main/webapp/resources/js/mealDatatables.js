@@ -11,6 +11,14 @@ function updateTable() {
     });
 }
 
+function saveMeal() {
+    var dateFromPicker = $('#dateTimePicker').data('DateTimePicker').date();
+    if (dateFromPicker) {
+        console.log($('#dateTime').val(dateFromPicker.format().substr(0, 19)));
+    }
+    save();
+}
+
 function clearFilter() {
     $("#filter")[0].reset();
     $.get(ajaxUrl, updateTableByData);
@@ -84,9 +92,11 @@ $(function () {
         format: 'LT',
         format: 'HH:mm'
     });
-    $('#datetimePicker').datetimepicker({
+
+    $('#dateTimePicker').datetimepicker({
         format: 'DD.MM.YYYY HH:mm'
     });
+
 
 });
 
