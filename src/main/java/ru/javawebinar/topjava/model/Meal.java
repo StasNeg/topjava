@@ -51,7 +51,7 @@ public class Meal extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @NotNull(groups = View.ValidatedUI.class)
+    @NotNull
     private User user;
 
     public Meal() {
