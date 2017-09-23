@@ -74,6 +74,9 @@ public class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
+
+
+
     @Test
     public void testGetForbidden() throws Exception {
         mockMvc.perform(get(REST_URL)
@@ -89,9 +92,8 @@ public class AdminRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(updated)))
+                .content(JSON_EDIT_USER_WITH_PASSWORD))
                 .andExpect(status().isOk());
-
         MATCHER.assertEquals(updated, userService.get(USER_ID));
     }
 
@@ -107,6 +109,26 @@ public class AdminRestControllerTest extends AbstractControllerTest {
 
         MATCHER.assertEquals(NEW_USER, returned);
         MATCHER.assertListEquals(Arrays.asList(ADMIN, NEW_USER, USER), userService.getAll());
+    }
+
+    @Test
+    public void testCreateNotValid() throws Exception {
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JSON_NEW_USER_WITH_PASSWORD_WRONG_EMAIL)).andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    public void testUpdateNotValid() throws Exception {
+        User updated = new User(USER);
+        updated.setName("");
+        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
+        mockMvc.perform(put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

@@ -60,6 +60,17 @@ public class ValidationUtil {
 
     public static ResponseEntity<String> getErrorResponse(BindingResult result) {
         StringJoiner joiner = new StringJoiner("<br>");
+        getStringResult(result, joiner);
+        return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    public static String getErrorResponseString(BindingResult result) {
+        StringJoiner joiner = new StringJoiner("<br>");
+        getStringResult(result, joiner);
+        return joiner.toString();
+    }
+
+    private static void getStringResult(BindingResult result, StringJoiner joiner) {
         result.getFieldErrors().forEach(
                 fe -> {
                     String msg = fe.getDefaultMessage();
@@ -68,6 +79,11 @@ public class ValidationUtil {
                     }
                     joiner.add(msg);
                 });
-        return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    public static void hasErrors(BindingResult result) {
+        if (result.hasErrors()){
+            throw new NotFoundException(ValidationUtil.getErrorResponseString(result));
+        }
     }
 }
