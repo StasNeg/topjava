@@ -4,15 +4,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.to.UserTo;
 import ru.javawebinar.topjava.util.UserUtil;
 import ru.javawebinar.topjava.web.user.AbstractUserController;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
 @Controller
 public class RootController extends AbstractUserController {
@@ -20,6 +21,11 @@ public class RootController extends AbstractUserController {
     @GetMapping("/")
     public String root() {
         return "redirect:meals";
+    }
+
+    @GetMapping("/locale")
+    public ModelAndView setLocale(Locale locale) {
+        return new ModelAndView("login");
     }
 
     //    @Secured("ROLE_ADMIN")
@@ -74,4 +80,6 @@ public class RootController extends AbstractUserController {
             return "redirect:login?message=app.registered&username=" + userTo.getEmail();
         }
     }
+
+
 }

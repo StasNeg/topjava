@@ -21,6 +21,12 @@
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                 </button>
             </form:form>
+            <button type="submit" class="btn btn-lg btn-primary" onclick="setNewLocale('en')">
+                English
+            </button>
+            <button type="submit" class="btn btn-lg btn-primary" onclick="setNewLocale('ru')">
+                Russian
+            </button>
         </div>
     </div>
 </div>
@@ -91,6 +97,17 @@
     function setCredentials(username, password) {
         $('input[name="username"]').val(username);
         $('input[name="password"]').val(password);
+    }
+    function setNewLocale(locale) {
+        $.ajax({
+            url: "/locale",
+            type: "get", //send it through get method
+            data: {
+            locale : locale },
+            success: function(html) {
+                document.location.reload();
+            }
+        });
     }
 </script>
 </body>

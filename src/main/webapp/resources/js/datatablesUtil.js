@@ -32,6 +32,16 @@ function updateRow(id) {
     });
 }
 
+// function setNewLocale(locale) {
+//     $.get('locale' + locale, function (data) {
+//         // $.each(data, function (key, value) {
+//         //     form.find("input[name='" + key + "']").val(value);
+//         // });
+//         // $("#editRow").modal();
+//     });
+// }
+
+
 function deleteRow(id) {
     $.ajax({
         url: ajaxUrl + id,
