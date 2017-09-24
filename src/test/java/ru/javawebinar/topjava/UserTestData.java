@@ -26,6 +26,7 @@ public class UserTestData {
                     )
     );
     public static final User NEW_USER = new User(null, "New", "new@gmail.com", "newPass", 2300, Role.ROLE_USER, Role.ROLE_ADMIN);
+    public static final User NEW_USER_WRONG_EMAIL = new User(null, "New", "user@yandex.ru", "newPass", 2300, Role.ROLE_USER, Role.ROLE_ADMIN);
     public static final String JSON_NEW_USER_WITH_PASSWORD = "{\"name\":\"New\",\"email\":\"new@gmail.com\",\"password\":\"password\",\"enabled\":true,\"registered\":\"2017-09-20T09:12:40.953+0000\",\"roles\":[\"ROLE_USER\",\"ROLE_ADMIN\"],\"caloriesPerDay\":2300}";
     public static final String JSON_NEW_USER_WITH_PASSWORD_WRONG_EMAIL = "{\"name\":\"New\",\"email\":\"\",\"password\":\"password\",\"enabled\":true,\"registered\":\"2017-09-20T09:12:40.953+0000\",\"roles\":[\"ROLE_USER\",\"ROLE_ADMIN\"],\"caloriesPerDay\":2300}";
     public static final String JSON_EDIT_USER_WITH_PASSWORD = "{\"id\":100000,\"name\":\"UpdatedName\",\"email\":\"user@yandex.ru\",\"password\":\"password\",\"enabled\":true,\"registered\":\"2017-09-23T14:03:29.861+0000\",\"roles\":[\"ROLE_ADMIN\"],\"caloriesPerDay\":2005}";

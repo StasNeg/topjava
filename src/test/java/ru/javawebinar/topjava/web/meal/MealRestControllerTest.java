@@ -2,7 +2,9 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.transaction.TestTransaction;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
@@ -129,4 +131,12 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().json(JsonUtil.writeValue(
                         MealsUtil.getWithExceeded(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1), USER.getCaloriesPerDay()))));
     }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void testCreateMealWrongData() {
+        service.create( getCreated_wrong_Data(),USER_ID);
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
+    }
+
 }

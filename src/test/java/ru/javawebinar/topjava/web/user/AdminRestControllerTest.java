@@ -1,7 +1,9 @@
 package ru.javawebinar.topjava.web.user;
 
 import org.junit.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.transaction.TestTransaction;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Role;
@@ -139,4 +141,14 @@ public class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER.contentListMatcher(ADMIN, USER)));
     }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void testCreateUserWrongEmail() {
+        userService.create(NEW_USER_WRONG_EMAIL);
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
+    }
+
+
+
 }
