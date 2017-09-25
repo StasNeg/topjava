@@ -20,13 +20,11 @@
                 <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                 </button>
+                <select class="form-control" id="sell">
+                    <option value="ru">ru</option>
+                    <option value="en">en</option>
+                </select>
             </form:form>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="setNewLocale('en')">
-                English
-            </button>
-            <button type="submit" class="btn btn-lg btn-primary" onclick="setNewLocale('ru')">
-                Russian
-            </button>
         </div>
     </div>
 </div>
@@ -94,6 +92,14 @@
     <c:if test="${not empty param.username}">
     setCredentials("${param.username}", "");
     </c:if>
+    var select = document.getElementById('sell');
+    select.addEventListener('change', function () {
+        localStorage.setItem('selected', select.options[select.selectedIndex].value);
+        setNewLocale(select.options[select.selectedIndex].value);
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#sell').val(localStorage.getItem('selected'));
+    });
     function setCredentials(username, password) {
         $('input[name="username"]').val(username);
         $('input[name="password"]').val(password);
@@ -109,6 +115,7 @@
             }
         });
     }
+
 </script>
 </body>
 </html>
