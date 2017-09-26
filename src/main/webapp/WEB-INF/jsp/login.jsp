@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<script type="text/javascript" src="resources/js/locale.js" defer></script>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
@@ -20,10 +20,12 @@
                 <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                 </button>
-                <select class="form-control" id="sell">
-                    <option value="ru">ru</option>
-                    <option value="en">en</option>
-                </select>
+                    <li class="dropdown navbar-form navbar-right">
+                        <select id="sell">
+                            <option value="ru">ru</option>
+                            <option value="en">en</option>
+                        </select>
+                    </li>
             </form:form>
         </div>
     </div>
@@ -92,30 +94,10 @@
     <c:if test="${not empty param.username}">
     setCredentials("${param.username}", "");
     </c:if>
-    var select = document.getElementById('sell');
-    select.addEventListener('change', function () {
-        localStorage.setItem('selected', select.options[select.selectedIndex].value);
-        setNewLocale(select.options[select.selectedIndex].value);
-    });
-    document.addEventListener('DOMContentLoaded', function () {
-        $('#sell').val(localStorage.getItem('selected'));
-    });
     function setCredentials(username, password) {
         $('input[name="username"]').val(username);
         $('input[name="password"]').val(password);
     }
-    function setNewLocale(locale) {
-        $.ajax({
-            url: "locale",
-            type: "get", //send it through get method
-            data: {
-            locale : locale },
-            success: function(html) {
-                document.location.reload();
-            }
-        });
-    }
-
 </script>
 </body>
 </html>

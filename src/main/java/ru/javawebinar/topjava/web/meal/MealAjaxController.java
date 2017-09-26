@@ -1,9 +1,7 @@
 package ru.javawebinar.topjava.web.meal;
 
 import com.fasterxml.jackson.annotation.JsonView;
-
 import org.springframework.http.MediaType;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +12,7 @@ import ru.javawebinar.topjava.to.MealWithExceed;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
 
 import static ru.javawebinar.topjava.util.ValidationUtil.hasErrors;
 
@@ -62,4 +61,5 @@ public class MealAjaxController extends AbstractMealController {
             @RequestParam(value = "endTime", required = false) LocalTime endTime) {
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
+
 }

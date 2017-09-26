@@ -12,7 +12,6 @@
 <div class="jumbotron">
     <div class="container">
         <h3><spring:message code="meal.title"/></h3>
-
         <div class="row">
             <div class="col-sm-7">
                 <div class="panel panel-default">

@@ -1,6 +1,5 @@
 var ajaxUrl = "ajax/profile/meals/";
 var datatableApi;
-
 function updateTable() {
     $.ajax({
         type: "POST",

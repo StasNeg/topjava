@@ -23,11 +23,6 @@ public class RootController extends AbstractUserController {
         return "redirect:meals";
     }
 
-    @GetMapping("/locale")
-    public ModelAndView setLocale(Locale locale) {
-        return new ModelAndView("login");
-    }
-
     //    @Secured("ROLE_ADMIN")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
