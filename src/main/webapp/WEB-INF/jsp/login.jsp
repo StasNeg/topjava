@@ -106,7 +106,7 @@
     }
     function setNewLocale(locale) {
         $.ajax({
-            url: "/locale",
+            url: "locale",
             type: "get", //send it through get method
             data: {
             locale : locale },
